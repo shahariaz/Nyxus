@@ -72,4 +72,23 @@ services:
 
     volumes:
       - ./docker-volumes/elasticsearch:/usr/share/elasticsearch/data
-    
+    networks:
+      - elastic
+  kibana:
+    container_name: kibana_container
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    restart: always
+    ports:
+      - '5601:5601'
+    environment:
+      ELASTICSEARCH_HOSTS: http://elastic_container:9200
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+
+networks:
+  elastic:
+    name: elastic
