@@ -12,12 +12,12 @@ services:
   
   mongodb:
     container_name: mongodb_container
-    image: mongo:Latest
+    image: mongo:latest
     restart: always
     ports:
       - '27017:27017'
     volumes:
-      - ./docker-volume/data:/data/db
+      - ./docker-volumes/data:/data/db
 
   mysql:
     container_name: mysql_container
@@ -33,4 +33,15 @@ services:
       MYSQL_PASSWORD: mypassword
     volumes:
       - ./docker-volumes/mysql:/var/lib/mysql 
-  
+  postgres:
+    container_name: postgres_container
+    image: postgres:latest
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    volumes:
+      - ./docker-volumes/postgres:/var/lib/postgresql/data
