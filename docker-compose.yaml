@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  redis:
+    container_name: redis_container
+    image: alpine:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    command:  redis-server --loglevel warning
+    volumes:
+      - ./docker-volumes/cache:/data
+  
+  mongodb:
+    container_name: mongodb_container
+    image: mongo:Latest
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./docker-volume/data:/data/db
+
+  mysql:
+    container_name: mysql_container
+    image: mysql:latest
+    restart: always
+    ports:
+      - '3306:3306'
+    command: --default-authentication-plugin=mysql_native_password 
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    volumes:
+      - ./docker-volumes/mysql:/var/lib/mysql 
+  
